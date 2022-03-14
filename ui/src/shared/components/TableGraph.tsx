@@ -14,7 +14,6 @@ import {fastReduce} from 'src/utils/fast'
 import {ErrorHandlingWith, DefaultError} from 'src/shared/decorators/errors'
 import {
   getDefaultTimeField,
-  isNumerical,
   formatNumericCell,
 } from 'src/dashboards/utils/tableGraph'
 
@@ -472,7 +471,7 @@ class TableGraph extends PureComponent<Props, State> {
       return _.defaultTo(fieldName, '').toString()
     }
 
-    if (isNumerical(cellData)) {
+    if (typeof cellData === 'number') {
       return formatNumericCell(cellData, decimalPlaces)
     }
 
@@ -532,7 +531,7 @@ class TableGraph extends PureComponent<Props, State> {
     const isFieldName = this.isVerticalTimeAxis ? isFirstRow : isFirstCol
     const isFixedCorner = isFirstRow && isFirstCol
 
-    const cellDataIsNumerical = isNumerical(cellData)
+    const cellDataIsNumerical = typeof cellData === 'number'
 
     let cellStyle: React.CSSProperties = style // tslint:disable-line
     if (
